@@ -1,10 +1,12 @@
 :root {
   --primary-color: #6b7280;
-  --background-color: #f3f4f6;
+  --background-color: #C3FFDB;
   --text-color: #374151;
   --accent-color: #60a5fa;
   --border-radius: 6px;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --darkgreen: #3E614C;
+  --lightred: #FD7B7B;
 }
 
 body {
@@ -53,42 +55,6 @@ h3 {
   font-weight: 600;
 }
 
-/* New button container */
-.button-container {
-  display: flex;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-button {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: var(--border-radius);
-  background-color: var(--accent-color);
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-  box-shadow: var(--shadow);
-  margin: 0;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-button:active {
-  transform: translateY(0);
-}
-
-#btn-decrease {
-  background-color: var(--primary-color);
-}
 
 pre {
   background-color: white;
@@ -112,3 +78,375 @@ pre {
     font-size: 1.5rem;
   }
 }
+
+
+.logo-topleft{
+  height: 5rem;
+}
+
+.header{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.icons{
+  height: 2.5rem;
+}
+
+.mainbody{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.statement{
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: white;
+  border-radius: 0.3rem;
+}
+
+button{
+  min-width: 7rem;
+  border-radius: 4rem;
+  height: 2.5rem;
+  background-color: #374151;
+  color: white;
+  border: 1px solid black;
+}
+
+button:hover{
+  cursor: pointer;
+}
+.green{
+  background-color: var(--darkgreen);
+}
+
+.red{
+  background-color: var(--lightred);
+}
+
+.emojihints{
+  
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.emojihintss{
+  
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+
+.disabled{
+  opacity: 0.6;
+}
+
+.uppermainbody{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.guesssection{
+  margin-bottom: 2rem;
+}
+
+.guessinput{
+  height: 2.5rem;
+  width: 15rem;
+  border-radius: 5rem;
+  border: 1px solid black;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.emojihints {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.emojihint {
+  position: relative;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 5rem;
+  background-color: white;
+  border: 1.5px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Cover Div */
+.cove {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 0.5rem;
+  /* border: 2px solid black; */
+  background-color: var(--random-color); /* Will be assigned via JS */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1s ease-in-out, opacity 0.5s ease-out;
+}
+
+/* Ribbon Image */
+.ribbon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Falling Animation */
+.fall {
+  transform: translateY(150px) rotate(20deg);
+  opacity: 0;
+}
+
+
+/* Popup Container */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* Incorrect Popup */
+.popup.incorrect {
+  background-color: #A93636;
+}
+
+/* Correct Popup */
+.popup.correct {
+  background-color: #00963C;
+}
+
+/* Popup Content */
+.popup-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Emoji */
+.popup-content .emoji {
+  font-size: 2rem;
+}
+
+/* Text Area */
+.popup-text {
+  flex: 1;
+}
+
+/* Close Button */
+.close-popup {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Submit Comment Button */
+.submit-comment {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.submit-comment:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Popup Overlay */
+.giveup-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #DFF9DC;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+}
+
+/* Text */
+.giveup-popup p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Button Container */
+.popup-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Buttons */
+.popup-buttons button {
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+/* Yes Button */
+#confirmGiveUp {
+  background-color: #3F5C45;
+  color: white;
+}
+
+/* Nah Button */
+#cancelGiveUp {
+  background-color: #E98F8F;
+  color: white;
+}
+
+.popup-buttons button:hover {
+  opacity: 0.8;
+}
+
+.pagetitle{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: -1rem;
+}
+
+.newtrivia_input{
+  height: 2.5rem;
+  background-color: white;
+  font-size: 1.1rem;
+  color: black;
+  text-align: center;
+  min-width: 20rem;
+  border: none;
+}
+
+.popup_newtrivia {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  z-index: 1000;
+}
+
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#emojiSearch {
+  width: 90%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.emoji-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.emoji-option {
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.emoji-option:hover {
+  transform: scale(1.2);
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+

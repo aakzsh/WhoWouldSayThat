@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Answers - Who Would Say That</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="final_answers.css">
+</head>
+<body>
+    <div class="header">
+        <div>
+          <img src="assets/logo.png" height="10px" class="logo-topleft" alt="">
+        </div>
+        <div>
+          <img src="assets/add_icon.png" height="10px" class="icons" alt="">
+          <img src="assets/info_icon.png" height="10px" class="icons" alt="">
+          <img src="assets/leaderboard_icon.png" height="10px" class="icons" alt="">
+        </div>
+      </div>
+
+      <div class="mainbody">
+        <div class="uppermainbody">
+          <div class="statement">
+            <p>Correct Answer: Trump</p>
+          </div>
+        </div>
+  
+        <!-- Emoji Hints Section -->
+        <div class="stats-section">
+            <h2>Stats</h2>
+            <div id="stats-container"></div>
+            <div class="pagination">
+              <button id="prevPage" disabled>◀</button>
+              <span id="pageIndicator">1</span>
+              <button id="nextPage">▶</button>
+            </div>
+          </div>
+  
+        <div class="guesssection">
+            <input type="text" class="guessinput" placeholder="Guess here..">
+            <button type="submit" id="submitanswer" class="green enabled">Submit</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+

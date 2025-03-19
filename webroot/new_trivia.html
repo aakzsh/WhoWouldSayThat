@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Trivia - Who Would Say That</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="new_trivia.css">
+</head>
+<body>
+    <div class="header">
+        <div>
+          <img src="assets/logo.png" height="10px" class="logo-topleft" alt="">
+        </div>
+       
+        <div>
+          <img src="assets/add_icon.png" height="10px" class="icons" alt="">
+          <img src="assets/info_icon.png" height="10px" class="icons" alt="">
+          <img src="assets/leaderboard_icon.png" height="10px" class="icons" alt="">
+        </div>
+      </div>
+    <div class="mainbody">
+        <p class="pagetitle">New Trivia</p>
+        <div>
+            <input type="text" placeholder="Type the statement here" class="newtrivia_input" id="newtrivia_input" maxlength="40">
+            <!-- <br> -->
+        </div>
+
+        <button class="green enabled" id="addhint">Add Emoji Hint</button>
+        <div class="emojihintss">
+            <!-- <div class="emojihint">
+                <span class="emoji"></span>
+                <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+              </div> -->
+        </div>
+
+        <div class="guesssection">
+            <input type="text" class="guessinput" id="triviaInput" placeholder="Type the correct answer">
+            <button id="addtriviabtn" class="green enabled">Submit Trivia</button>
+        </div>
+    </div>
+
+      
+    <script src="script.js"></script>
+</body>
+</html>
+

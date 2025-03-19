@@ -1,0 +1,38 @@
+.stats-section {
+    text-align: left;
+    padding: 20px;
+  }
+  
+  #stats-container {
+    margin-top: 10px;
+  }
+  
+  .stat-item {
+    background-color: #3d874a;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 5px 0;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .pagination button {
+    background-color: #3d4f3d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  

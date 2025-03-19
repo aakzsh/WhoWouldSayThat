@@ -1,24 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta charset="UTF-8" />
-    <title>Web View Example</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>This is your page.html</h1>
-    <h3>Your username is <span id="username">Guest</span></h3>
-    <h3>Current counter is at: <span id="counter">0</span></h3>
-    <div class="button-container">
-      <button id="btn-increase">Increase Counter ⬆️</button>
-      <button id="btn-decrease">Decrease Counter ⬇️</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Who Would Say That</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- <style>
+    /* Emoji Container */
+    .emojihint {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      border: 2px solid black;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 5px;
+    }
+
+    /* Cover Div */
+    .cover {
+      position: absolute;
+      width: 0%;
+      height: 0%;
+      background-color: black;
+      transition: transform 1s ease-in-out, opacity 0.5s ease-out;
+    }
+
+    /* Falling Animation */
+    .fall {
+      transform: translateY(150px) rotate(20deg);
+      opacity: 0;
+    }
+  </style> -->
+</head>
+<body>
+  <div class="header">
+    <div>
+      <img src="assets/logo.png" height="10px" class="logo-topleft" alt="">
     </div>
-    <h3>Last message from Devvit blocks:</h3>
-    <pre id="messageOutput"></pre>
-    <script type="application/javascript" src="script.js"></script>
-  </body>
+    <div>
+      <img src="assets/add_icon.png" height="10px" class="icons" alt="">
+      <img src="assets/info_icon.png" height="10px" class="icons" alt="">
+      <img src="assets/leaderboard_icon.png" height="10px" class="icons" alt="">
+    </div>
+  </div>
+  <div class="mainbody">
+      <div class="uppermainbody">
+        <div class="statement">
+          <p>“You're gambling with WW3”</p>
+        </div>
+        <div class="buttonoptions">
+          <button class="green enabled" id="reveal">Reveal hints</button>
+          <button class="red disabled" id="giveup">Give up :(</button>
+        </div>
+      </div>
+
+      <!-- Emoji Hints Section -->
+      <div class="emojihints">
+        <div class="emojihint">
+          <span class="emoji"></span>
+          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+        </div>
+        <div class="emojihint">
+          <span class="emoji"></span>
+          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+        </div>
+        <div class="emojihint">
+          <span class="emoji"></span>
+          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+        </div>
+        <div class="emojihint">
+          <span class="emoji"></span>
+          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+        </div>
+        <div class="emojihint">
+          <span class="emoji"></span>
+          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+        </div>
+      </div>
+
+      <div class="guesssection">
+          <input type="text" class="guessinput" placeholder="Guess here..">
+          <button type="submit" id="submitanswer" class="green enabled">Submit</button>
+      </div>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
