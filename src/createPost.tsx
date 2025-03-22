@@ -7,18 +7,18 @@ Devvit.configure({
 
 // Adds a new menu item to the subreddit allowing to create a new post
 Devvit.addMenuItem({
-  label: 'Create New Devvit Post (with Web View)',
+  label: 'Add New WWST Post',
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     const post = await reddit.submitPost({
-      title: 'Web View Example',
+      title: 'Who Would Say That?',
       subredditName: subreddit.name,
       // The preview appears while the post loads
       preview: (
         <vstack height="100%" width="100%" alignment="middle center">
-          <text size="large">Loading ...</text>
+          <text size="large">Loading your trivia...🧑‍🚀</text>
         </vstack>
       ),
     });

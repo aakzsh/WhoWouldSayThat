@@ -101,7 +101,7 @@ pre {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 2rem;
+  gap: 0.5rem;
   flex-direction: column;
 }
 
@@ -206,7 +206,7 @@ button:hover{
   top: 0;
   height: 3rem;
   width: 3rem;
-  border-radius: 0.5rem;
+  border-radius: 10rem;
   /* border: 2px solid black; */
   background-color: var(--random-color); /* Will be assigned via JS */
   display: flex;
