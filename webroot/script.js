@@ -1,56 +1,365 @@
+import { emojiData } from "./emojiData.js";
+
 class App {
   constructor() {
-    const revealButton = document.getElementById("reveal");
-    const giveupButton = document.getElementById("giveup");
-    const submitButton = document.getElementById("submitanswer");
-    const addHintButton = document.getElementById("addhint");
-    const container = document.querySelector(".emojihintss");
-    const addtriviaButton = document.getElementById("addtriviabtn");
-    const triviaInput = document.getElementById("triviaInput");
-    const newtrivia_input = document.getElementById("newtrivia_input");
-    const newtrivia_button = document.getElementById("newtrivia_button");
-    const info_button = document.getElementById("info_button");
-    const leaderboard_button = document.getElementById("leaderboard_button");
-    const home_button = document.getElementById("home_button")
-    const guessbody = document.getElementById("guessbody")
-    const showTriviaStatement = document.getElementById("showTriviaStatement")
 
-    const emojiHints = [];
-    const maxHints = 5;
+    
+    this.initializeElements();
+    this.setupEventListeners();
+    this.setupEmojiPicker();
+    this.setupPagination();
+    this.setupCacheSystem();
+    
+    // Initialize state
+    this.emojiHints = [];
+    this.maxHints = 5;
+    // this.emojiArray = ["🔥", "🤖", "🌍", "💣", "😨"]; // Default emoji hints array
+    // this.emojiArray = [];
+    this.currentIndex = 0;
+    this.triviaData = {};
+    // this.emojiElements = document.querySelectorAll(".emoji");
+    const emojihintsContainer = document.querySelector(".emojihints");
+    emojihintsContainer.innerHTML = ""; // Clear existing hints
+    this.commentBtn = document.getElementById("commentanswer")
 
-    const emojiArray = ["🔥", "🤖", "🌍", "💣", "😨"]; // Emoji hints array
-    let currentIndex = 0;
-    const emojiElements = document.querySelectorAll(".emoji");
+    // Assign emojis to elements
 
-    if (submitButton) {
-      submitButton.addEventListener("click", () => {
-        console.log("isCorrect");
-        showPopup(true);
+    
+    // Assign random pastel colors to covers
+    
+    function   assignRandomColors() {
+      const pastelColors = [
+        "#FFD1DC", // Light Pink
+        "#FFDFBA", // Peach
+        "#FFECB3", // Pale Yellow
+        "#FAE1DD", // Soft Coral
+        "#F8D7DA", // Blush Pink
+        "#F5E1FD", // Lavender
+        "#E1D5E7", // Mauve
+        "#D7C4E8", // Lilac
+        "#C5CAE9", // Periwinkle
+        "#BBDEFB", // Baby Blue
+        "#D6E2F0", // Ice Blue
+        "#E0BBE4", // Soft Purple
+        "#FAD1D1", // Light Rose
+        "#F4C2C2", // Salmon Pink
+        "#FCE1E4", // Pale Pink
+      ];
+  
+      // Assign random pastel colors
+      const el = document.querySelectorAll(".cove");
+      el.forEach((cove) => {
+        const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+        cove.style.backgroundColor = randomColor;
       });
     }
 
-    if (addtriviaButton) {
-      addtriviaButton.addEventListener("click", () => {
-        if (emojiHints.length === 0) {
-          showPopup_NewTrivia("At least 1 emoji hint is required!");
+    function updateEmojiHints(emojiArrayLocal) {
+      emojihintsContainer.innerHTML = ""; // Clear previous hints
+    
+      emojiArrayLocal.forEach((emoji) => {
+        const hintDiv = document.createElement("div");
+        hintDiv.classList.add("emojihint");
+    
+        const emojiSpan = document.createElement("span");
+        emojiSpan.classList.add("emoji");
+        emojiSpan.textContent = emoji;
+    
+        const coveDiv = document.createElement("div");
+        coveDiv.classList.add("cove");
+    
+        const ribbonImg = document.createElement("img");
+        ribbonImg.src = "assets/giftribbon.png";
+        ribbonImg.classList.add("ribbon");
+        coveDiv.appendChild(ribbonImg);
+        hintDiv.appendChild(emojiSpan);
+        hintDiv.appendChild(coveDiv);
+        emojihintsContainer.appendChild(hintDiv);
+      });
+      assignRandomColors();
+    }
+
+    function showPopup(isCorrect) {
+      // const popup = document.createElement("div");
+      // popup.classList.add("popup", isCorrect ? "correct" : "incorrect");
+  console.log("idhar tak hua")
+
+  const popup = document.createElement("div");
+  popup.className = "popup_newtrivia";
+  popup.textContent = "message";
+
+  document.body.appendChild(popup);
+
+      // popup.innerHTML = `
+      //   <div class="popup-content">
+      //     <span class="emoji">lmaoo</span>
+      //     <div class="popup-text">
+      //       <h2>${isCorrect ? "Correct" : "Incorrect"}</h2>
+      //       <p>${isCorrect ? "You da champ <3" : "2/3 tries remaining"}</p>
+      //       <button class="submit-comment">Submit as Comment</button>
+      //     </div>
+      //     <button class="close-popup">✖</button>
+      //   </div>
+      // `;
+  
+      // document.body.appendChild(popup);
+  
+      // // Close popup when the cross button is clicked
+      // popup.querySelector(".close-popup").addEventListener("click", () => {
+      //   popup.remove();
+      // });
+    }
+
+    // document.getElementById("submitanswerr").addEventListener("click", () => {
+    //   console.log("checkk")
+    //   // console.log(isCorrect);
+    //   showPopup(false);
+    // });
+    // if (this.submitButton) {
+      
+    //   this.submitButton.addEventListener("click", () => {
+    //     document.getElementById("correctanswer").innerHTML = `Your Answer: ${this.triviaData.triviaAnswer.toLowerCase()}`
+    //   document.getElementById("youranswer").innerHTML = `Your Answer: ${this.guessinput.value.toLowerCase()}`
+    //     console.log("checkk")
+    //     // console.log(isCorrect);
+    //     if(this.guessinput.value.toLowerCase() === this.triviaData.triviaAnswer.toLowerCase()){
+    //       this.showPopup_NewTrivia("Correct Answer!");
+    //       this.handleGiveUp(true, this.guessinput.value.toLowerCase())
+    //     }
+    //     else{
+          
+    //       this.showPopup_NewTrivia("Incorrect Answer!");
+    //       this.handleGiveUp(false, this.guessinput.value.toLowerCase())
+    //     }
+    //     // showPopup(false);
+    //   });
+    // }
+
+
+    let retryCount = 0; // Initialize retry counter
+const maxRetries = 3; // Maximum allowed retries
+
+if (this.submitButton) {
+  this.submitButton.addEventListener("click", () => {
+    document.getElementById("correctanswer").innerHTML = `Correct Answer: ${this.triviaData.triviaAnswer.toLowerCase()}`;
+    document.getElementById("youranswer").innerHTML = `Your Answer: ${this.guessinput.value.toLowerCase()}`;
+    
+    console.log("checkk");
+
+    if (this.guessinput.value.toLowerCase() === this.triviaData.triviaAnswer.toLowerCase()) {
+      this.showPopup_NewTrivia("Correct Answer!");
+      this.handleGiveUp(true, this.guessinput.value.toLowerCase());
+      retryCount = 0; // Reset retry count on correct answer
+    } else {
+      retryCount++; // Increment retry count
+      let remainingRetries = maxRetries - retryCount;
+
+      if (remainingRetries > 0) {
+        this.showPopup_NewTrivia(`Incorrect Answer! ${remainingRetries} retries remaining.`);
+      } else {
+        this.showPopup_NewTrivia("Incorrect Answer! Redirecting...");
+        setTimeout(() => {
+          this.handleGiveUp(false, this.guessinput.value.toLowerCase())
+        }, 500); // Delay for user to read message
+      }
+
+      // this.handleGiveUp(false, this.guessinput.value.toLowerCase());
+    }
+  });
+}
+    
+    // Add this to your script.js file
+addEventListener('message', (event) => {
+  // Check if the message is from Devvit
+  console.log("trigger receiveddd")
+  const message = event.data.data.message;
+  // Handle the triggerScreenChange message
+  if (message.type === 'triggerScreenChange') {
+    console.log('Received screen change trigger:', message.data.index);
+    
+    // Execute your screen change logic here
+    const screenIndex = message.data.index;
+    
+    // Example: Hide all screens first
+    const allScreens = [
+      document.getElementById('guessparent'),
+      document.getElementById('newtriviaparent'),
+      document.getElementById('finalanswersparent'),
+      document.getElementById('leaderboardparent'),
+      document.getElementById('infoparent')
+    ];
+    
+    allScreens.forEach(screen => {
+      if (screen) screen.style.display = 'none';
+    });
+    
+    // Show the selected screen
+    if (allScreens[screenIndex]) {
+      allScreens[screenIndex].style.display = 'flex';
+    }
+    
+    // You can also update UI elements based on the current screen
+    // updateUIForScreen(screenIndex);
+  }
+  if (message.type === "leaderboardData") {
+    console.log("Leaderboard received:", message.data);
+
+    // const { top3, userRank, userScore } = message.data;
+    const top3 = message.data["top"];
+    console.log("top 3 is ", top3)
+    const userRank = message.data.userRank;
+    const userScore = message.data.userScore
+    // Update the leaderboard UI
+    document.getElementById("top1").innerHTML = top3[0] ? `@${top3[0].username} <br/> ${top3[0].score} guesses` : "N/A";
+    document.getElementById("top2").innerHTML = top3[1] ? `@${top3[1].username} <br/> ${top3[1].score} guesses` : "N/A";
+    document.getElementById("top3").innerHTML = top3[2] ? `@${top3[2].username} <br/> ${top3[2].score} guesses` : "N/A";
+    document.getElementById("top3url").src = top3[2].avatarUrl
+    document.getElementById("top2url").src = top3[1].avatarUrl
+    document.getElementById("top2url").src = top3[0].avatarUrl
+
+    // Display user rank and score
+    document.getElementById("userRank").innerText = `Your Rank: ${userRank}`;
+    document.getElementById("userScore").innerText = `Your Score: ${userScore}`;
+  }
+  else if (message.type === "triviaData") {
+  console.log(message.data);
+  this.showTriviaStatement.innerHTML = message.data.triviaStatement;
+  this.emojiArray = message.data.hints;
+  updateEmojiHints(message.data.hints); // Update hints dynamically
+  this.triviaData = message.data
+}
+});
+
+// Helper function to update UI elements based on current screen
+function updateUIForScreen(screenIndex) {
+  // Example: Update active state of navigation buttons
+  const navButtons = [
+    document.getElementById('home_button'),
+    document.getElementById('newtrivia_button'),
+    document.getElementById('finalanswers_button'),
+    document.getElementById('leaderboard_button'),
+    document.getElementById('info_button')
+  ];
+  
+  navButtons.forEach((button, index) => {
+    if (button) {
+      if (index === screenIndex) {
+        button.classList.add('active');
+      } else {
+        button.classList.remove('active');
+      }
+    }
+  });
+  
+  // You can add more screen-specific logic here
+  switch (screenIndex) {
+    case 0: // guess screen
+      console.log('Initializing guess screen');
+      // Reset game state, etc.
+      break;
+    case 1: // new trivia screen
+      console.log('Initializing new trivia screen');
+      // Clear form fields, etc.
+      break;
+    // Add cases for other screens
+  }
+}
+
+  }
+  
+  initializeElements() {
+    this.revealButton = document.getElementById("reveal");
+    this.giveupButton = document.getElementById("giveup");
+    this.submitButton = document.getElementById("submitanswerr");
+    this.addHintButton = document.getElementById("addhint");
+    this.container = document.querySelector(".emojihintss");
+    this.addtriviaButton = document.getElementById("addtriviabtn");
+    this.triviaInput = document.getElementById("triviaInput");
+    this.newtrivia_input = document.getElementById("newtrivia_input");
+    this.newtrivia_button = document.getElementById("newtrivia_button");
+    this.info_button = document.getElementById("info_button");
+    this.leaderboard_button = document.getElementById("leaderboard_button");
+    this.home_button = document.getElementById("home_button");
+    this.guessbody = document.getElementById("guessbody");
+    this.showTriviaStatement = document.getElementById("showTriviaStatement");
+    this.loadingIndicator = document.getElementById("loading");
+    this.covers = document.querySelectorAll(".cove");
+    this.guessinput = document.getElementById("guessinput");
+  }
+  
+  setupEventListeners() {
+    // Navigation buttons
+    if (this.home_button) {
+      this.home_button.addEventListener('click', () => {
+        console.log("screen change to home: triggered from html");
+        window.parent.postMessage({ type: 'changeScreen', data: {screen: 0}}, '*');
+      });
+    }
+    
+    if (this.newtrivia_button) {
+      this.newtrivia_button.addEventListener('click', () => {
+        console.log("screen change to new trivia: triggered from html");
+        window.parent.postMessage({ type: 'changeScreen', data: {screen: 1}}, '*');
+      });
+    }
+    
+    if (this.info_button) {
+      this.info_button.addEventListener('click', () => {
+        console.log("screen change to info screen: triggered from html");
+        window.parent.postMessage({ type: 'changeScreen', data: {screen: 4}}, '*');
+      });
+    }
+    
+    if (this.leaderboard_button) {
+      this.leaderboard_button.addEventListener('click', () => {
+        console.log("screen change to leaderboard: triggered from html");
+        window.parent.postMessage({ type: 'changeScreen', data: {screen: 3}}, '*');
+      });
+    }
+    
+    // Game buttons
+
+    if (this.revealButton) {
+      this.revealButton.addEventListener("click", () => {
+        console.log("reveal");
+        this.revealNextEmoji();
+      });
+    }
+    
+    if (this.giveupButton) {
+      this.giveupButton.addEventListener("click", () => {
+        if (this.giveupButton.classList.contains("enabled")) {
+          this.showGiveUpPopup();
+        }
+      });
+    }
+    
+    // New trivia buttons
+    if (this.addtriviaButton) {
+      this.addtriviaButton.addEventListener("click", () => {
+        if (this.emojiHints.length === 0) {
+          this.showPopup_NewTrivia("At least 1 emoji hint is required!");
           return;
         }
 
-        if (!triviaInput.value.trim()) {
-          showPopup_NewTrivia("Trivia answer cannot be empty!");
+        if (!this.triviaInput.value.trim()) {
+          this.showPopup_NewTrivia("Trivia answer cannot be empty!");
           return;
         }
 
-        if (!newtrivia_input.value.trim()) {
-          showPopup_NewTrivia("Trivia statement cannot be empty!");
+        if (!this.newtrivia_input.value.trim()) {
+          this.showPopup_NewTrivia("Trivia statement cannot be empty!");
           return;
         } else {
           console.log("doing a new post");
-          // showPopup("none");
-          window.parent?.postMessage(
+          window.parent.postMessage(
             {
               type: "newPost",
-              data: {hints: emojiHints, triviaAnswer: triviaInput.value, triviaStatement: newtrivia_input.value},
+              data: {
+                hints: this.emojiHints, 
+                triviaAnswer: this.triviaInput.value, 
+                triviaStatement: this.newtrivia_input.value
+              },
             },
             "*"
           );
@@ -58,418 +367,114 @@ class App {
         }
       });
     }
+    
+    // Page visibility handling
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        // The page is now visible, resume any paused activities
+        console.log('Web view is visible');
+        // Request fresh data when becoming visible again
+        window.parent.postMessage({ type: 'webViewReady' }, '*');
+      } else {
+        // The page is now hidden, pause any background activities
+        console.log('Web view is hidden');
+      }
+    });
+    
+  }
 
+  
+  
+  setupEmojiPicker() {
     // Full Emoji List (Add more if needed)
-    const emojiData = [
-      { symbol: "🔥", name: "fire", keywords: ["hot", "burn", "flame"] },
-      {
-        symbol: "😂",
-        name: "face with tears of joy",
-        keywords: ["laugh", "funny", "joy"],
-      },
-      {
-        symbol: "❤️",
-        name: "red heart",
-        keywords: ["love", "heart", "affection"],
-      },
-      {
-        symbol: "🎯",
-        name: "direct hit",
-        keywords: ["target", "bullseye", "goal", "dart"],
-      },
-      {
-        symbol: "💯",
-        name: "hundred points",
-        keywords: ["100", "perfect", "score"],
-      },
-      {
-        symbol: "😍",
-        name: "smiling face with heart-eyes",
-        keywords: ["love", "heart", "crush"],
-      },
-      {
-        symbol: "🙌",
-        name: "raising hands",
-        keywords: ["celebrate", "praise", "hooray"],
-      },
-      {
-        symbol: "😊",
-        name: "smiling face with smiling eyes",
-        keywords: ["happy", "joy", "smile"],
-      },
-      {
-        symbol: "👍",
-        name: "thumbs up",
-        keywords: ["approval", "like", "good"],
-      },
-      { symbol: "💀", name: "skull", keywords: ["dead", "funny", "LOL"] },
-      {
-        symbol: "🤔",
-        name: "thinking face",
-        keywords: ["hmm", "thoughtful", "question"],
-      },
-      {
-        symbol: "🙏",
-        name: "folded hands",
-        keywords: ["please", "thank you", "pray"],
-      },
-      {
-        symbol: "🎉",
-        name: "party popper",
-        keywords: ["celebration", "party", "fun"],
-      },
-      {
-        symbol: "😎",
-        name: "smiling face with sunglasses",
-        keywords: ["cool", "chill", "confident"],
-      },
-      {
-        symbol: "😢",
-        name: "crying face",
-        keywords: ["sad", "tears", "upset"],
-      },
-      {
-        symbol: "🤯",
-        name: "exploding head",
-        keywords: ["mind blown", "shock", "wow"],
-      },
-      {
-        symbol: "🥺",
-        name: "pleading face",
-        keywords: ["please", "cute", "sad"],
-      },
-      {
-        symbol: "🎶",
-        name: "musical notes",
-        keywords: ["music", "song", "melody"],
-      },
-      {
-        symbol: "🤩",
-        name: "star-struck",
-        keywords: ["excited", "amazed", "impressed"],
-      },
-      { symbol: "🚀", name: "rocket", keywords: ["space", "launch", "fast"] },
-      { symbol: "🐶", name: "dog face", keywords: ["animal", "pet", "puppy"] },
-      {
-        symbol: "🌍",
-        name: "globe with meridians",
-        keywords: ["world", "earth", "global"],
-      },
-      {
-        symbol: "📚",
-        name: "books",
-        keywords: ["library", "reading", "study"],
-      },
-      { symbol: "🏆", name: "trophy", keywords: ["award", "win", "champion"] },
-      {
-        symbol: "💪",
-        name: "flexed biceps",
-        keywords: ["strong", "fitness", "workout"],
-      },
-      { symbol: "👀", name: "eyes", keywords: ["look", "watch", "see"] },
-      { symbol: "🍕", name: "pizza", keywords: ["food", "cheese", "yum"] },
-      {
-        symbol: "⚡",
-        name: "high voltage",
-        keywords: ["electric", "energy", "lightning"],
-      },
-      {
-        symbol: "🌟",
-        name: "glowing star",
-        keywords: ["bright", "special", "shine"],
-      },
-      {
-        symbol: "🎵",
-        name: "musical note",
-        keywords: ["music", "song", "melody"],
-      },
-      { symbol: "👑", name: "crown", keywords: ["royalty", "king", "queen"] },
-      { symbol: "💔", name: "broken heart", keywords: ["sad", "love", "hurt"] },
-      {
-        symbol: "💡",
-        name: "light bulb",
-        keywords: ["idea", "innovation", "inspiration"],
-      },
-      {
-        symbol: "🎤",
-        name: "microphone",
-        keywords: ["sing", "karaoke", "music"],
-      },
-      {
-        symbol: "🏀",
-        name: "basketball",
-        keywords: ["sports", "game", "hoops"],
-      },
-      { symbol: "🚗", name: "car", keywords: ["vehicle", "drive", "road"] },
-      {
-        symbol: "✈️",
-        name: "airplane",
-        keywords: ["travel", "flight", "trip"],
-      },
-      {
-        symbol: "🧠",
-        name: "brain",
-        keywords: ["smart", "intelligence", "mind"],
-      },
-      {
-        symbol: "🕹️",
-        name: "joystick",
-        keywords: ["game", "play", "controller"],
-      },
-      {
-        symbol: "📅",
-        name: "calendar",
-        keywords: ["date", "schedule", "event"],
-      },
-      {
-        symbol: "🎭",
-        name: "performing arts",
-        keywords: ["drama", "theater", "acting"],
-      },
-      {
-        symbol: "🥇",
-        name: "1st place medal",
-        keywords: ["win", "gold", "champion"],
-      },
-      { symbol: "📝", name: "memo", keywords: ["note", "writing", "document"] },
-      {
-        symbol: "🌈",
-        name: "rainbow",
-        keywords: ["color", "pride", "beautiful"],
-      },
-      {
-        symbol: "🛒",
-        name: "shopping cart",
-        keywords: ["store", "buy", "grocery"],
-      },
-      { symbol: "🏡", name: "house", keywords: ["home", "building", "living"] },
-      {
-        symbol: "🍎",
-        name: "red apple",
-        keywords: ["fruit", "healthy", "food"],
-      },
-      {
-        symbol: "🚦",
-        name: "vertical traffic light",
-        keywords: ["stop", "go", "road"],
-      },
-      {
-        symbol: "🌺",
-        name: "hibiscus",
-        keywords: ["flower", "nature", "beautiful"],
-      },
-      {
-        symbol: "🎂",
-        name: "birthday cake",
-        keywords: ["celebration", "party", "cake"],
-      },
-      {
-        symbol: "📸",
-        name: "camera",
-        keywords: ["photo", "picture", "snapshot"],
-      },
-    ];
-
-    // Add the rest of your emojis here, with names and keywords.
-
+   this.emojiData = emojiData
+    // Create emoji popup
     const emojiPopup = document.createElement("div");
     emojiPopup.id = "emojiPopup";
     emojiPopup.className = "popup";
     emojiPopup.innerHTML = `
-    <div class="popup-content">
+      <div class="popup-content">
         <input type="text" id="emojiSearch" placeholder="Search for an emoji...">
         <div id="emojiList" class="emoji-grid scrollable-emoji-list"></div>
-    </div>
-`;
+      </div>
+    `;
     document.body.appendChild(emojiPopup);
-
-    const emojiList = document.getElementById("emojiList");
-
-    function loadEmojis(filteredEmojis) {
-      emojiList.innerHTML = "";
-      const maxEmojis = 10;
-      const emojisToDisplay = filteredEmojis.slice(0, maxEmojis); // Limit to 10
-
-      emojisToDisplay.forEach((emoji) => {
-        const emojiItem = document.createElement("span");
-        emojiItem.className = "emoji-option";
-        emojiItem.textContent = emoji.symbol; // Use the symbol
-        emojiItem.addEventListener("click", () => selectEmoji(emoji.symbol)); // Pass the symbol
-        emojiList.appendChild(emojiItem);
-      });
-    }
+    this.emojiPopup = emojiPopup;
+    this.emojiList = document.getElementById("emojiList");
+    this.emojiSearch = document.getElementById("emojiSearch");
+    
     // Filter Emojis
-    emojiSearch.addEventListener("input", () => {
-      const query = emojiSearch.value.toLowerCase();
-      const filtered = emojiData.filter((emoji) => {
-        return (
-          emoji.symbol.includes(query) ||
-          emoji.name.includes(query) ||
-          emoji.keywords.some((keyword) => keyword.includes(query))
-        );
+    if (this.emojiSearch) {
+      this.emojiSearch.addEventListener("input", () => {
+        const query = this.emojiSearch.value.toLowerCase();
+        const filtered = this.emojiData.filter((emoji) => {
+          return (
+            emoji.symbol.includes(query) ||
+            emoji.name.includes(query) ||
+            emoji.keywords.some((keyword) => keyword.includes(query))
+          );
+        });
+        this.loadEmojis(filtered);
       });
-      loadEmojis(filtered);
-    });
-    // Select and Add Emoji
-    function selectEmoji(selectedEmoji) {
-      emojiHints.push(selectedEmoji);
-
-      const emojiHintDiv = document.createElement("div");
-      emojiHintDiv.className = "emojihint fade-in";
-
-      const emojiSpan = document.createElement("span");
-      emojiSpan.className = "emoji";
-      emojiSpan.textContent = selectedEmoji;
-
-      emojiHintDiv.appendChild(emojiSpan);
-      container.appendChild(emojiHintDiv);
-
-      emojiPopup.style.display = "none"; // Close popup
     }
-
-    // Show Popup
-    if (addHintButton) {
-      addHintButton.addEventListener("click", () => {
-        if (emojiHints.length >= maxHints) {
-          showPopup_NewTrivia("Max emoji hints limit is 5!");
+    
+    // Show Emoji Picker
+    if (this.addHintButton) {
+      this.addHintButton.addEventListener("click", () => {
+        if (this.emojiHints.length >= this.maxHints) {
+          this.showPopup_NewTrivia("Max emoji hints limit is 5!");
           return;
         }
-        emojiPopup.style.display = "flex"; // Show popup
-        loadEmojis(["allEmojis"]); // Load all emojis initially
+        this.emojiPopup.style.display = "flex"; // Show popup
+        this.loadEmojis(this.emojiData); // Load all emojis initially
       });
     }
-    function showPopup_NewTrivia(message) {
-      const popup = document.createElement("div");
-      popup.className = "popup_newtrivia";
-      popup.textContent = message;
 
-      document.body.appendChild(popup);
-
-      setTimeout(() => {
-        popup.remove();
-      }, 2000); // Auto-remove after 2 seconds
-    }
-
-    const pastelColors = [
-      "#FFD1DC", // Light Pink
-      "#FFDFBA", // Peach
-      "#FFECB3", // Pale Yellow
-      "#FAE1DD", // Soft Coral
-      "#F8D7DA", // Blush Pink
-      "#F5E1FD", // Lavender
-      "#E1D5E7", // Mauve
-      "#D7C4E8", // Lilac
-      "#C5CAE9", // Periwinkle
-      "#BBDEFB", // Baby Blue
-      "#D6E2F0", // Ice Blue
-      "#E0BBE4", // Soft Purple
-      "#FAD1D1", // Light Rose
-      "#F4C2C2", // Salmon Pink
-      "#FCE1E4", // Pale Pink
-    ];
-
-    const covers = document.querySelectorAll(".cove");
-
-    // Assign random pastel colors
-    covers.forEach((cove) => {
-      const randomColor =
-        pastelColors[Math.floor(Math.random() * pastelColors.length)];
-      cove.style.backgroundColor = randomColor;
+    document.getElementById("commentanswer").addEventListener("click", () => {
+      console.log("commment triggered debug 1")
+      window.parent.postMessage({ type: 'addComment', data: {comment: this.guessinput.value.toLowerCase()}}, '*');
     });
 
-    // Assign emojis to elements
-    emojiElements.forEach((el, index) => {
-      el.textContent = emojiArray[index];
+    // if(this.commentBtn){
+    
+      
+    // }
+  }
+  
+  
+
+  loadEmojis(filteredEmojis) {
+    this.emojiList.innerHTML = "";
+    const maxEmojis = 10;
+    const emojisToDisplay = filteredEmojis.slice(0, maxEmojis); // Limit to 10
+
+    emojisToDisplay.forEach((emoji) => {
+      const emojiItem = document.createElement("span");
+      emojiItem.className = "emoji-option";
+      emojiItem.textContent = emoji.symbol; // Use the symbol
+      emojiItem.addEventListener("click", () => this.selectEmoji(emoji.symbol)); // Pass the symbol
+      this.emojiList.appendChild(emojiItem);
     });
+  }
+  
+  selectEmoji(selectedEmoji) {
+    this.emojiHints.push(selectedEmoji);
 
-    if (revealButton) {
-      revealButton.addEventListener("click", () => {
-        console.log("reveal");
-        revealNextEmoji();
-      });
-    }
+    const emojiHintDiv = document.createElement("div");
+    emojiHintDiv.className = "emojihint fade-in";
 
-    function revealNextEmoji() {
-      if (currentIndex < covers.length) {
-        covers[currentIndex].classList.add("fall"); // Remove cover for current emoji
-        currentIndex++; // Move to the next one
-      }
+    const emojiSpan = document.createElement("span");
+    emojiSpan.className = "emoji";
+    emojiSpan.textContent = selectedEmoji;
 
-      // If all emojis are revealed, disable revealButton and enable giveupButton
-      if (currentIndex === covers.length) {
-        revealButton.classList.remove("enabled");
-        revealButton.classList.add("disabled");
-        giveupButton.classList.remove("disabled");
-        giveupButton.classList.add("enabled");
-      }
-    }
+    emojiHintDiv.appendChild(emojiSpan);
+    this.container.appendChild(emojiHintDiv);
 
-    function showPopup(isCorrect) {
-      const popup = document.createElement("div");
-      popup.classList.add("popup", isCorrect ? "correct" : "incorrect");
-
-      popup.innerHTML = `
-        <div class="popup-content">
-          <span class="emoji">${isCorrect ? "🎉" : "😵‍💫"}</span>
-          <div class="popup-text">
-            <h2>${isCorrect ? "Correct" : "Incorrect"}</h2>
-            <p>${isCorrect ? "You da champ <3" : "2/3 tries remaining"}</p>
-            <button class="submit-comment">Submit as Comment</button>
-          </div>
-          <button class="close-popup">✖</button>
-        </div>
-      `;
-
-      document.body.appendChild(popup);
-
-      // Close popup when the cross button is clicked
-      popup.querySelector(".close-popup").addEventListener("click", () => {
-        popup.remove();
-      });
-    }
-
-    if (giveupButton) {
-      giveupButton.addEventListener("click", () => {
-        if (giveupButton.classList.contains("enabled")) {
-          showGiveUpPopup();
-        }
-      });
-    }
-
-    function showGiveUpPopup() {
-      const popup = document.createElement("div");
-      popup.classList.add("giveup-popup");
-
-      popup.innerHTML = `
-        <div class="popup-content">
-          <p>Are you sure you wanna give up?</p>
-          <div class="popup-buttons">
-            <button id="confirmGiveUp">Yes :(</button>
-            <button id="cancelGiveUp">Nah not yet :)</button>
-          </div>
-        </div>
-      `;
-
-      document.body.appendChild(popup);
-
-      // Cancel button closes popup
-      document.getElementById("cancelGiveUp").addEventListener("click", () => {
-        popup.remove();
-      });
-
-      // Confirm button triggers dummy function
-      document.getElementById("confirmGiveUp").addEventListener("click", () => {
-        dummyGiveUpFunction();
-        popup.remove();
-      });
-    }
-
-    function dummyGiveUpFunction() {
-      console.log("Give up confirmed!");
-      // Add actual give-up logic here
-    }
-
-    const statsData = [
+    this.emojiPopup.style.display = "none"; // Close popup
+  }
+  
+  setupPagination() {
+    this.statsData = [
       "Trump - 2 Guesses",
       "Donald - 1 Guess",
       "Donald - 1 Guess",
@@ -487,113 +492,169 @@ class App {
       "Satya - 3 Guesses",
     ];
 
-    const statsContainer = document.getElementById("stats-container");
-    const prevBtn = document.getElementById("prevPage");
-    const nextBtn = document.getElementById("nextPage");
-    const pageIndicator = document.getElementById("pageIndicator");
+    this.statsContainer = document.getElementById("stats-container");
+    this.prevBtn = document.getElementById("prevPage");
+    this.nextBtn = document.getElementById("nextPage");
+    this.pageIndicator = document.getElementById("pageIndicator");
+    
+    this.itemsPerPage = 10;
+    this.currentPage = 1;
 
-    const itemsPerPage = 10;
-    let currentPage = 1;
-
-    function renderStats() {
-      statsContainer.innerHTML = "";
-      const start = (currentPage - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      const visibleStats = statsData.slice(start, end);
-
-      visibleStats.forEach((stat) => {
-        const div = document.createElement("div");
-        div.classList.add("stat-item");
-        div.textContent = stat;
-        statsContainer.appendChild(div);
-      });
-
-      prevBtn.disabled = currentPage === 1;
-      nextBtn.disabled = end >= statsData.length;
-      pageIndicator.textContent = currentPage;
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener("click", () => {
-        if (currentPage > 1) {
-          currentPage--;
-          renderStats();
+    if (this.prevBtn) {
+      this.prevBtn.addEventListener("click", () => {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+          this.renderStats();
         }
       });
     }
 
-    if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        if (currentPage * itemsPerPage < statsData.length) {
-          currentPage++;
-          renderStats();
+    if (this.nextBtn) {
+      this.nextBtn.addEventListener("click", () => {
+        if (this.currentPage * this.itemsPerPage < this.statsData.length) {
+          this.currentPage++;
+          this.renderStats();
         }
       });
     }
 
     // Initial render
-    if (statsContainer) {
-      renderStats();
+    if (this.statsContainer) {
+      this.renderStats();
+    }
+  }
+  
+  renderStats() {
+    this.statsContainer.innerHTML = "";
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    const visibleStats = this.statsData.slice(start, end);
+
+    visibleStats.forEach((stat) => {
+      const div = document.createElement("div");
+      div.classList.add("stat-item");
+      div.textContent = stat;
+      this.statsContainer.appendChild(div);
+    });
+
+    this.prevBtn.disabled = this.currentPage === 1;
+    this.nextBtn.disabled = end >= this.statsData.length;
+    this.pageIndicator.textContent = this.currentPage;
+  }
+  
+  setupCacheSystem() {
+    // Check for cached data on initialization
+    const cachedData = this.getCachedTrivia();
+    if (cachedData && this.showTriviaStatement) {
+      // Use cached data immediately while requesting fresh data
+      this.showTriviaStatement.innerHTML = cachedData.triviaStatement || '"ERROR!!"';
+      
+      // Update emoji hints if available
+      if (cachedData.hints && cachedData.hints.length > 0) {
+        this.emojiArray = cachedData.hints;
+        this.emojiElements.forEach((el, index) => {
+          if (index < cachedData.hints.length) {
+            el.textContent = cachedData.hints[index];
+          }
+        });
+      }
+    }
+  }
+  
+  cacheTrivia(triviaData) {
+    localStorage.setItem('cachedTrivia', JSON.stringify(triviaData));
+  }
+
+  getCachedTrivia() {
+    const cached = localStorage.getItem('cachedTrivia');
+    return cached ? JSON.parse(cached) : null;
+  }
+  
+
+  
+  revealNextEmoji() {
+    if (this.currentIndex < document.querySelectorAll(".cove").length) {
+      document.querySelectorAll(".cove")[this.currentIndex].classList.add("fall"); // Remove cover for current emoji
+      this.currentIndex++; // Move to the next one
     }
 
-    // Send a message from web view to Devvit
+    // If all emojis are revealed, disable revealButton and enable giveupButton
+    if (this.currentIndex === document.querySelectorAll(".cove").length) {
+      this.revealButton.classList.remove("enabled");
+      this.revealButton.classList.add("disabled");
+      this.giveupButton.classList.remove("disabled");
+      this.giveupButton.classList.add("enabled");
+    }
+  }
+  
 
-    if(newtrivia_button){
-      newtrivia_button.addEventListener('click', (event) => {
-        console.log("screen change to new trivia: triggered from html")
-        window.parent.postMessage({ type: 'changeScreen', data: {screen: 1}}, '*');
-      });
-    }
-    if(info_button){
-      info_button.addEventListener('click', (event) => {
-        console.log("screen change to info screen: triggered from html")
-        window.parent.postMessage({ type: 'changeScreen', data: {screen: 4}}, '*');
-      });
-    }
-    if(leaderboard_button){
-      leaderboard_button.addEventListener('click', (event) => {
-        console.log("screen change to leaderboard: triggered from html")
-        window.parent.postMessage({ type: 'changeScreen', data: {screen: 3}}, '*');
-      });
-    }
-    if(home_button){
-      home_button.addEventListener('click', (event) => {
-        console.log("screen change to home: triggered from html")
-        window.parent.postMessage({ type: 'changeScreen', data: {screen: 0}}, '*');
-      });
-    }
+  
+  showGiveUpPopup() {
+    const popup = document.createElement("div");
+    popup.classList.add("giveup-popup");
 
-// app.js
+    popup.innerHTML = `
+      <div class="popup-content">
+        <p>Are you sure you wanna give up?</p>
+        <div class="popup-buttons">
+          <button id="confirmGiveUp">Yes :(</button>
+          <button id="cancelGiveUp">Nah not yet :)</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Cancel button closes popup
+    document.getElementById("cancelGiveUp").addEventListener("click", () => {
+      popup.remove();
+    });
+
+    // Confirm button triggers give up function
+    document.getElementById("confirmGiveUp").addEventListener("click", () => {
+      this.handleGiveUp();
+      popup.remove();
+    });
+  }
+  
+  handleGiveUp(correct, guess) {
+    if(correct){
+      console.log("answer was correct")
+    }
+    console.log("Give up confirmed!");
+    // Send message to Devvit app
+    window.parent.postMessage({ 
+      type: 'giveUp', 
+      data: { postId: this.getPostIdFromUrl(), answer:  guess, fulldata: this.triviaData} 
+    }, '*');
+
+  }
+  
+  getPostIdFromUrl() {
+    // Implementation depends on how you're passing the post ID
+    // This is a placeholder implementation
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('postId') || '';
+  }
+  
+  showPopup_NewTrivia(message) {
+    const popup = document.createElement("div");
+    popup.className = "popup_newtrivia";
+    popup.textContent = message;
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.remove();
+    }, 2000); // Auto-remove after 2 seconds
+  }
+}
+
+// Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   // Tell Devvit that the web view is ready to receive data
   window.parent.postMessage({ type: 'webViewReady' }, '*');
   
-  // Listen for messages from Devvit
-  window.addEventListener('message', (event) => {
-    if (event.data.type === 'devvit-message') {
-      const message = event.data.message;
-      
-      if (message.type === 'triviaData') {
-        console.log("recevied onload function")
-        
-        // Hide loading indicator
-
-        // document.getElementById('loading').style.display = 'none';
-        
-        // // Show trivia content
-        // const triviaContent = document.getElementById('trivia-content');
-        // triviaContent.style.display = 'block';
-        
-        // Process and display the trivia data
-        const triviaData = message.data;
-        console.log("trivia data is fetching as ",triviaData)
-        showTriviaStatement.innerHTML = triviaData.triviaStatement
-      }
-    }
-  });
+  // Initialize the app
+  new App();
 });
-
-  }
-}
-
-new App();

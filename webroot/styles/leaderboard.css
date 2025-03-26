@@ -3,6 +3,11 @@
     padding: 20px;
   }
   
+  .leaderboard{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
   h2 {
     font-size: 24px;
   }

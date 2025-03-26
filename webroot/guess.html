@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guess - Who Would Say That</title>
   <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/final_answers.css">
+  <link rel="stylesheet" href="styles/leaderboard.css">
 </head>
+
 <body id="guessbody">
   <div class="header">
     <div>
@@ -17,46 +21,137 @@
       <img src="assets/leaderboard_icon.png" height="10px" class="icons" id="leaderboard_button" alt="">
     </div>
   </div>
-  <div class="mainbody">
-      <div class="uppermainbody">
-        <div class="statement">
-          <p id="showTriviaStatement">“You're gambling with WW3”</p>
-        </div>
-        <div class="buttonoptions">
-          <button class="green enabled" id="reveal">Reveal hints</button>
-          <button class="red disabled" id="giveup">Give up :(</button>
-        </div>
+  <div class="mainbody" id="guessparent">
+    <div class="uppermainbody">
+      <div class="statement">
+        <p id="showTriviaStatement">loading...</p>
       </div>
+      <div class="buttonoptions">
+        <button class="green enabled" id="reveal">Reveal hints</button>
+        <button class="red disabled" id="giveup">Give up :(</button>
+      </div>
+    </div>
 
-      <!-- Emoji Hints Section -->
-      <!-- this needs to be rendered dynamically  -->
-      <div class="emojihints">
-        <div class="emojihint">
-          <span class="emoji"></span>
-          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
-        </div>
-        <div class="emojihint">
-          <span class="emoji"></span>
-          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
-        </div>
-        <div class="emojihint">
-          <span class="emoji"></span>
-          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
-        </div>
-        <div class="emojihint">
-          <span class="emoji"></span>
-          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
-        </div>
-        <div class="emojihint">
-          <span class="emoji"></span>
-          <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
-        </div>
+    <!-- Emoji Hints Section -->
+    <!-- this needs to be rendered dynamically  -->
+    <div class="emojihints">
+      <div class="emojihint">
+        <span class="emoji"></span>
+        <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
       </div>
-      <div class="guesssection">
-          <input type="text" class="guessinput" placeholder="Guess here..">
-          <button type="submit" id="submitanswer" class="green enabled">Submit</button>
+      <div class="emojihint">
+        <span class="emoji"></span>
+        <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
       </div>
+      <div class="emojihint">
+        <span class="emoji"></span>
+        <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+      </div>
+      <div class="emojihint">
+        <span class="emoji"></span>
+        <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+      </div>
+      <div class="emojihint">
+        <span class="emoji"></span>
+        <div class="cove"><img src="assets/giftribbon.png" class="ribbon"></div>
+      </div>
+    </div>
+    <div class="guesssection">
+      <input type="text" id="guessinput" class="guessinput" placeholder="Guess here..">
+      <!-- <button class="red" id="giveup">Give up :(</button> -->
+      <button id="submitanswerr" class="green enabled">Submit</button>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <div class="mainbody" id="finalanswersparent" style="display: none;">
+    <div class="uppermainbody">
+      <div class="statement">
+        <!-- this needs to be rendered dynamically  -->
+        <p id="correctanswer">Correct Answer: NA</p>
+      </div>
+    </div>
+    <br><br>
+    <div class="uppermainbody">
+      <div class="statement">
+        <!-- this needs to be rendered dynamically  -->
+        <p id="youranswer">Your Answer: NA</p>
+      </div>
+    </div>
+    <button id="commentanswer" class="green enabled">Comment Your Answer</button>
+
+    <!-- <div class="guesssection">
+      <input type="text" class="guessinput" placeholder="Guess here..">
+      <button type="submit" id="submitanswer" class="green enabled">Submit</button>
+    </div> -->
+  </div>
+
+  <div class="mainbody" id="infoparent" style="display: none;">
+    <div class="infotitle">
+      <p class="pagetitle">How to Play</p>
+      <!-- <img src="assets/logo.png" height="150px" alt=""> -->
+
+    </div>
+    <div class="info-container">
+      <p class="info-point">• Read the prompt given.</p>
+      <p class="info-point">• Try to guess the personality who had said it or is most likely to say it.</p>
+      <p class="info-point">• Utilise emoji hints, and guess the correct person</p>
+      <p class="info-point">• Create a trivia for others to guess.</p>
+      <p class="info-point">• Have cool open discussions about personalities and voice your opinions</p>
+    </div>
+  </div>
+
+
+  <div class="mainbody" id="leaderboardparent" style="display: none;">
+    <p class="pagetitle">🏅 Leaderboard 🏅</p>
+    <div class="top3">
+      <div class="threecard second">
+        <p class="ranktext">2</p>
+        <div class="avatarcicle">
+          <img src="assets/avatar.png" id="top2url" class="avatarimg" alt="">
+        </div>
+        <p class="username" id="top2">NA</p>
+        <!-- <p class="guesses">32 guesses</p> -->
+      </div>
+      <div class="threecard first">
+        <p class="ranktext">👑</p>
+        <div class="avatarcicle">
+          <img src="assets/avatar.png" id="top1url" class="avatarimg" alt="">
+        </div>
+        <p class="username" id="top1">NA</p>
+        <!-- <p class="guesses">32 guesses</p> -->
+      </div>
+      <div class="threecard third">
+        <p class="ranktext">3</p>
+        <div class="avatarcicle">
+          <img src="assets/avatar.png" id="top3url" class="avatarimg" alt="">
+        </div>
+        <p class="username" id="top3">NA</p>
+        <!-- <p class="guesses">32 guesses</p> -->
+      </div>
+    </div>
+
+    <p class="your_rank" id="userRank">Your Rank: NA</p>
+  </div>
+
+
+
+  <div class="mainbody" id="newtriviaparent" style="display: none;">
+    <p class="pagetitle">New Trivia</p>
+    <div>
+      <input type="text" placeholder="Type the statement here" class="newtrivia_input" id="newtrivia_input"
+        maxlength="40">
+    </div>
+
+    <button class="green enabled" id="addhint">Add Emoji Hint</button>
+    <div class="emojihintss">
+      <!-- hints will be added here dynamically -->
+    </div>
+    <div class="guesssection">
+      <input type="text" class="guessinput" id="triviaInput" placeholder="Type the correct answer">
+      <button id="addtriviabtn" class="green enabled">Submit Trivia</button>
+    </div>
+  </div>
+  <script type="module" src="script.js"></script>
 </body>
+
 </html>
