@@ -70,10 +70,7 @@ pre {
 }
 
 @media (max-width: 640px) {
-  body {
-    /* padding: 0.75rem;
-    gap: 0.5rem; */
-  }
+
 
   h1 {
     font-size: 1.5rem;
@@ -170,8 +167,21 @@ button:hover{
   gap: 1rem;
 }
 
-.guesssection{
+.guesssection {
+  display: flex;
+  flex-direction: row; /* Default: Row-wise */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  gap: 1rem; /* Adds spacing between items */
   margin-bottom: 2rem;
+}
+
+/* For mobile screens (max-width: 768px), switch to column layout */
+@media (max-width: 768px) {
+  .guesssection {
+    flex-direction: column;
+    align-items: center; /* Ensure items remain centered */
+  }
 }
 
 .guessinput{
